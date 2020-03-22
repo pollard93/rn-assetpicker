@@ -24,6 +24,7 @@
     "test:unit:watch": "jest --watch"
   },
   "devDependencies": {
+    "@react-native-community/cameraroll": "^1.4.1",
     "@types/jest": "^25.1.4",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
@@ -59,6 +60,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "peerDependencies": {
+    "@react-native-community/cameraroll": "^1.4.1",
     "react": ">= 16.8.6",
     "react-native": ">= 0.60.5"
   },
