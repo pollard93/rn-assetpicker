@@ -53,6 +53,7 @@ module.exports = {
     react: 'react',
     reactDOM: 'react-dom',
     'react-native': 'react-native',
+    '@react-native-community/cameraroll': '@react-native-community/cameraroll',
   },
 
   plugins: [

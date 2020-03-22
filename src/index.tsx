@@ -1,4 +1,10 @@
-import { Hello } from './components/Hello';
+import { AssetPickerItemProps, ListFooterComponentProps, MultiSelectComponentProps, useAssetPicker } from './components/AssetPickerContext/AssetPickerContext';
+import AssetPickerProvider from './components/AssetPickerProvider/AssetPickerProvider';
 
-export * as Test from './styles/index';
-export default Hello;
+export {
+  useAssetPicker,
+  AssetPickerProvider,
+  AssetPickerItemProps,
+  ListFooterComponentProps,
+  MultiSelectComponentProps,
+};
