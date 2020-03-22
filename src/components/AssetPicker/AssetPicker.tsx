@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { TouchableOpacity, FlatList, Platform, Dimensions, View } from 'react-native';
+import { TouchableOpacity, FlatList, Platform, Dimensions, View, Animated } from 'react-native';
 import CameraRoll, { PhotoIdentifier } from '@react-native-community/cameraroll';
 import styles from './AssetPicker.styles';
 import { useAssetPicker, AssetPickerContextProps } from '../AssetPickerContext/AssetPickerContext';
@@ -25,7 +25,6 @@ const AssetPicker = () => {
  * Handles the loading and displaying of assets
  */
 export const AssetPickerInner = (props: AssetPickerContextProps) => {
-  if (!props.open) return null;
 
 
   /**
@@ -113,54 +112,97 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
   }, []);
 
 
-  return (
-    <TouchableOpacity
-      style={styles.wrap}
-      onPress={() => {
-        /**
-         * Close picker when pressing the background
-         */
-        props.updateProps({
-          open: false,
-        });
-      }}
-    >
-      <View style={styles.inner}>
-        <View style={styles.flatListWrap}>
-          <FlatList
-            data={assets}
-            onEndReached={onEndReached}
-            numColumns={2}
-            contentContainerStyle={[{ paddingTop: HEADER_MAX_HEIGHT }]}
-            keyExtractor={(item) => item.node.image.uri}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => onSelectAsset(item)}
-                style={styles.item}
-                testID='ASSETPICKERITEM'
-              >
-                <View style={styles.itemInner}>
-                  {props.config.AssetPickerItem({
-                    asset: item,
-                    isSelected: selectedAssets.includes(item),
-                  })}
-                </View>
-              </TouchableOpacity>
-            )}
-            ListFooterComponent={props.config.ListFooterComponent({ noMoreAssets })}
-          />
-        </View>
+  /**
+   * Animation state
+   */
+  const [opacity] = useState(new Animated.Value(0));
+  const [closed, setClosed] = useState(false);
 
-        {(props.isMulti ? (
-          <View style={styles.multiButtonWrap}>
-            {props.config.MultiSelectComponent({
-              selectedAssets,
-              onDoneMultiSelect,
-            })}
+
+  /**
+   * Handle in and out animation when props.open changes
+   */
+  useEffect(() => {
+    /**
+     * If changed to open, set closed to false to render
+     */
+    if (props.open) {
+      setClosed(false);
+    }
+
+    /**
+     * Animate the opacity value in or out, dependant on props.open
+     */
+    Animated.timing(opacity, {
+      toValue: props.open ? 1 : 0,
+      duration: 300,
+    }).start(() => {
+      /**
+       * If animated out, set closed to true to not render
+       */
+      if (!props.open) {
+        setClosed(true);
+      }
+    });
+  }, [props.open]);
+
+
+  /**
+   * Do not render if closed
+   */
+  if (closed) return null;
+
+
+  return (
+    <Animated.View style={[styles.wrap, { opacity }]}>
+      <TouchableOpacity
+        style={styles.shroud}
+        onPress={() => {
+          /**
+           * Close picker when pressing the background
+           */
+          props.updateProps({
+            open: false,
+          });
+        }}
+      >
+        <View style={styles.inner}>
+          <View style={styles.flatListWrap}>
+            <FlatList
+              data={assets}
+              onEndReached={onEndReached}
+              numColumns={2}
+              contentContainerStyle={[{ paddingTop: HEADER_MAX_HEIGHT }]}
+              keyExtractor={(item) => item.node.image.uri}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => onSelectAsset(item)}
+                  style={styles.item}
+                  testID='ASSETPICKERITEM'
+                >
+                  <View style={styles.itemInner}>
+                    {props.config.AssetPickerItem({
+                      asset: item,
+                      isSelected: selectedAssets.includes(item),
+                    })}
+                  </View>
+                </TouchableOpacity>
+              )}
+              ListFooterComponent={props.config.ListFooterComponent({ noMoreAssets })}
+            />
           </View>
-        ) : null)}
-      </View>
-    </TouchableOpacity>
+
+          {(props.isMulti ? (
+            <View style={styles.multiButtonWrap}>
+              {props.config.MultiSelectComponent({
+                selectedAssets,
+                onDoneMultiSelect,
+              })}
+            </View>
+          ) : null)}
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

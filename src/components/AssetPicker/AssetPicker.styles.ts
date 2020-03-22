@@ -10,6 +10,10 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
   },
+  shroud: {
+    flex: 1,
+    width: '100%',
+  },
   inner: {
     flex: 1,
     padding: 5,

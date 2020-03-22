@@ -1,4 +1,4 @@
-import { AssetPickerItemProps, ListFooterComponentProps, useAssetPicker } from './components/AssetPickerContext/AssetPickerContext';
+import { AssetPickerItemProps, ListFooterComponentProps, MultiSelectComponentProps, useAssetPicker } from './components/AssetPickerContext/AssetPickerContext';
 import AssetPickerProvider from './components/AssetPickerProvider/AssetPickerProvider';
 
 export {
@@ -6,4 +6,5 @@ export {
   AssetPickerProvider,
   AssetPickerItemProps,
   ListFooterComponentProps,
+  MultiSelectComponentProps,
 };
