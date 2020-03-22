@@ -116,13 +116,15 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
    * Animation state
    */
   const [opacity] = useState(new Animated.Value(0));
-  const [closed, setClosed] = useState(false);
+  const [closed, setClosed] = useState(true);
 
 
   /**
    * Handle in and out animation when props.open changes
    */
   useEffect(() => {
+    if (!props.open && closed) return;
+
     /**
      * If changed to open, set closed to false to render
      */
@@ -142,6 +144,7 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
        */
       if (!props.open) {
         setClosed(true);
+        setSelectedAssets([]);
       }
     });
   }, [props.open]);
