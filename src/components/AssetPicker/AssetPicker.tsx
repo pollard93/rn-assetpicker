@@ -157,7 +157,7 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
 
 
   return (
-    <Animated.View style={[styles.wrap, { opacity }]}>
+    <Animated.View style={[styles.wrap, props.config.shroudStyles, { opacity }]}>
       <TouchableOpacity
         style={styles.shroud}
         onPress={() => {

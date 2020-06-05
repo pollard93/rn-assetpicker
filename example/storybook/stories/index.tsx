@@ -83,7 +83,7 @@ storiesOf('Story', module)
   .addDecorator((getStory) => (
     <AssetPickerProvider
       config={{
-        numColumns: 1,
+        numColumns: 2,
         AssetPickerItem,
         ListFooterComponent,
         MultiSelectComponent,

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, ReactElement } from 'react';
 import { PhotoIdentifier, AssetType } from '@react-native-community/cameraroll';
+import { ViewStyle } from 'react-native';
 
 
 export interface AssetPickerItemProps {
@@ -24,6 +25,7 @@ export interface AssetPickerConfig {
   ListFooterComponent: (props: ListFooterComponentProps) => ReactElement;
   MultiSelectComponent: (props: MultiSelectComponentProps) => ReactElement;
   numColumns?: number; // Default 2
+  shroudStyles?: ViewStyle;
 }
 
 
