@@ -16,7 +16,6 @@ export default StyleSheet.create({
   },
   inner: {
     flex: 1,
-    padding: 5,
   },
   flatListWrap: {
     flex: 1,
@@ -26,9 +25,6 @@ export default StyleSheet.create({
   },
   item: {
     aspectRatio: 1,
-    width: '50%',
-  },
-  itemInner: {
-    padding: 5,
+    flex: 1,
   },
 });
