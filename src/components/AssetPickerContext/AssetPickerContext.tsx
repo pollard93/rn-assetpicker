@@ -23,6 +23,7 @@ export interface AssetPickerConfig {
   AssetPickerItem: (props: AssetPickerItemProps) => ReactElement;
   ListFooterComponent: (props: ListFooterComponentProps) => ReactElement;
   MultiSelectComponent: (props: MultiSelectComponentProps) => ReactElement;
+  numColumns?: number; // Default 2
 }
 
 

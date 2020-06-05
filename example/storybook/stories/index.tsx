@@ -42,7 +42,7 @@ const TestComponent = (props: {isMulti?: boolean}) => {
  * Create an AssetPickerItem component and pass it to the Provider
  */
 const AssetPickerItem = (props: AssetPickerItemProps) => (
-  <View style={{ width: '100%', height: '100%' }}>
+  <View style={{ padding: 2 }}>
     <Image
       style={{ width: '100%', height: '100%' }}
       source={{ uri: props.asset.node.image.uri }}
@@ -83,6 +83,7 @@ storiesOf('Story', module)
   .addDecorator((getStory) => (
     <AssetPickerProvider
       config={{
+        numColumns: 1,
         AssetPickerItem,
         ListFooterComponent,
         MultiSelectComponent,

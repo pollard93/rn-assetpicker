@@ -174,7 +174,7 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
             <FlatList
               data={assets}
               onEndReached={onEndReached}
-              numColumns={2}
+              numColumns={props.config.numColumns || 2}
               contentContainerStyle={[{ paddingTop: HEADER_MAX_HEIGHT }]}
               keyExtractor={(item) => item.node.image.uri}
               renderItem={({ item }) => (
@@ -183,12 +183,10 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
                   style={styles.item}
                   testID='ASSETPICKERITEM'
                 >
-                  <View style={styles.itemInner}>
-                    {props.config.AssetPickerItem({
-                      asset: item,
-                      isSelected: selectedAssets.includes(item),
-                    })}
-                  </View>
+                  {props.config.AssetPickerItem({
+                    asset: item,
+                    isSelected: selectedAssets.includes(item),
+                  })}
                 </TouchableOpacity>
               )}
               ListFooterComponent={props.config.ListFooterComponent({ noMoreAssets })}
