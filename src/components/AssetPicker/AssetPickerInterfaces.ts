@@ -22,7 +22,7 @@ export interface MultiSelectComponentProps {
 
 export interface AssetPickerConfig {
   AssetPickerItem: FC<AssetPickerItemProps>;
-  ListFooterComponent: FC<ListFooterComponentProps>;
+  ListFooterComponent?: FC<ListFooterComponentProps>;
   MultiSelectComponent: FC<MultiSelectComponentProps>;
   numColumns?: number; // Default 2
   shroudStyles?: ViewStyle;
@@ -30,9 +30,12 @@ export interface AssetPickerConfig {
 
 
 export interface AssetPickerProps {
-  config: AssetPickerConfig;
   assetType: AssetType;
   onSelectAssets: (assets: PhotoIdentifier['node'][]) => void;
   onDismiss: () => void;
   isMulti?: boolean;
+}
+
+export interface AssetPickerBaseProps extends AssetPickerProps {
+  config: AssetPickerConfig;
 }

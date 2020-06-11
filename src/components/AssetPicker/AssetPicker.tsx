@@ -2,7 +2,7 @@ import React, { useEffect, useState, FC } from 'react';
 import { TouchableOpacity, FlatList, Platform, Dimensions, View, Animated } from 'react-native';
 import CameraRoll, { PhotoIdentifier } from '@react-native-community/cameraroll';
 import styles from './AssetPicker.styles';
-import { AssetPickerProps } from './AssetPickerInterfaces';
+import { AssetPickerBaseProps } from './AssetPickerInterfaces';
 
 
 /**
@@ -15,7 +15,7 @@ const HEADER_MAX_HEIGHT = height * 0.5;
 /**
  * Handles the loading and displaying of assets
  */
-const AssetPicker: FC<AssetPickerProps> = (props) => {
+const AssetPicker: FC<AssetPickerBaseProps> = (props) => {
 
 
   /**
@@ -154,7 +154,7 @@ const AssetPicker: FC<AssetPickerProps> = (props) => {
                   })}
                 </TouchableOpacity>
               )}
-              ListFooterComponent={props.config.ListFooterComponent({ noMoreAssets })}
+              ListFooterComponent={props.config.ListFooterComponent && props.config.ListFooterComponent({ noMoreAssets })}
             />
           </View>
 
