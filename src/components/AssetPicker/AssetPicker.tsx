@@ -1,30 +1,21 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { TouchableOpacity, FlatList, Platform, Dimensions, View, Animated } from 'react-native';
 import CameraRoll, { PhotoIdentifier } from '@react-native-community/cameraroll';
 import styles from './AssetPicker.styles';
-import { useAssetPicker, AssetPickerContextProps } from '../AssetPickerContext/AssetPickerContext';
+import { AssetPickerBaseProps } from './AssetPickerInterfaces';
 
+
+/**
+ * Get height of window, used for top padding of scroll view
+ */
 const { height } = Dimensions.get('window');
 const HEADER_MAX_HEIGHT = height * 0.5;
 
 
 /**
- * AssetPicker component listens for changes in the AssetPickerContext and renders AssetPickerInner
- */
-const AssetPicker = () => {
-  const assetPickerContext = useAssetPicker();
-
-  // Wrap AssetPickerInner so it only updates when the context changes
-  return useMemo(() => (
-    <AssetPickerInner {...assetPickerContext} />
-  ), [assetPickerContext]);
-};
-
-
-/**
  * Handles the loading and displaying of assets
  */
-export const AssetPickerInner = (props: AssetPickerContextProps) => {
+const AssetPicker: FC<AssetPickerBaseProps> = (props) => {
 
 
   /**
@@ -116,44 +107,20 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
    * Animation state
    */
   const [opacity] = useState(new Animated.Value(0));
-  const [closed, setClosed] = useState(true);
 
 
   /**
    * Handle in and out animation when props.open changes
    */
   useEffect(() => {
-    if (!props.open && closed) return;
-
-    /**
-     * If changed to open, set closed to false to render
-     */
-    if (props.open) {
-      setClosed(false);
-    }
-
     /**
      * Animate the opacity value in or out, dependant on props.open
      */
     Animated.timing(opacity, {
-      toValue: props.open ? 1 : 0,
+      toValue: 1,
       duration: 300,
-    }).start(() => {
-      /**
-       * If animated out, set closed to true to not render
-       */
-      if (!props.open) {
-        setClosed(true);
-        setSelectedAssets([]);
-      }
-    });
-  }, [props.open]);
-
-
-  /**
-   * Do not render if closed
-   */
-  if (closed) return null;
+    }).start();
+  }, []);
 
 
   return (
@@ -164,9 +131,7 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
           /**
            * Close picker when pressing the background
            */
-          props.updateProps({
-            open: false,
-          });
+          props.onDismiss();
         }}
       >
         <View style={styles.inner}>
@@ -189,7 +154,7 @@ export const AssetPickerInner = (props: AssetPickerContextProps) => {
                   })}
                 </TouchableOpacity>
               )}
-              ListFooterComponent={props.config.ListFooterComponent({ noMoreAssets })}
+              ListFooterComponent={props.config.ListFooterComponent && props.config.ListFooterComponent({ noMoreAssets })}
             />
           </View>
 

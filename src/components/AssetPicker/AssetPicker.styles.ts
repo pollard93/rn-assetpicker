@@ -20,11 +20,11 @@ export default StyleSheet.create({
   flatListWrap: {
     flex: 1,
   },
-  multiButtonWrap: {
-    flexShrink: 0,
-  },
   item: {
     aspectRatio: 1,
     flex: 1,
+  },
+  multiButtonWrap: {
+    flexShrink: 0,
   },
 });
