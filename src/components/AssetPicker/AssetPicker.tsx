@@ -43,7 +43,7 @@ const AssetPicker: FC<AssetPickerBaseProps> = (props) => {
 
     try {
       const data = await CameraRoll.getPhotos({
-        first: 4,
+        first: (props.config.numColumns || 2) * 2,
         after: lastCursor,
         assetType: props.assetType,
         groupTypes: Platform.OS !== 'android' ? 'All' : undefined,
